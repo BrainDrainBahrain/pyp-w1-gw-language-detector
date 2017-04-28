@@ -11,7 +11,8 @@ def detect_language(text, languages):
     LANGUAGES[0...n]['common_words'][0...n]
     '''
     #strips puncuation from text
-    txt = text.translate(None, string.punctuation)
+    #txt = text.translate(None, string.punctuation)
+    txt = ''.join([c for c in text if c not in string.punctuation])
     
     #generate table of words from 'text'
     text_table = txt.lower().split()
