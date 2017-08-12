@@ -1,45 +1,37 @@
 # -*- coding: utf-8 -*-
-import string 
+import string
 """This is the entry point of the program."""
 
 def detect_language(text, languages):
-    """Returns the detected language of given text."""
-    
-    
     # implement your solution here
-    '''
-    LANGUAGES[0...n]['common_words'][0...n]
-    '''
-    #strips puncuation from text
-    #txt = text.translate(None, string.punctuation)
-    txt = ''.join([c for c in text if c not in string.punctuation])
-    
-    #generate table of words from 'text'
-    text_table = txt.lower().split()
-    
-    res = []
-    
-    #iterate through languages
-    for i, lang in enumerate(languages):
-        #add space for counting matches to res
-        res.append(0)
-        
-        #iterate through words in active 100 word dictionary
-        for dictword in lang['common_words']:
-            res[i] += text_table.count(dictword)
-            
-    ans = 0
-    ansidx = 0
-    for i, cnt in enumerate(res):
-        if cnt > ans:
-            ans = cnt
-            ansidx = i
-            
-        
-    return languages[ansidx]['name']
-            
-  
-    
-        
-    
+    words = create_word_list_from(text)
+    matches = tally_word_matches_between(words, languages)
+    answer_index = find_top_match_index(matches)
 
+    return languages[answer_index]['name']
+
+def create_word_list_from(text):
+    only_words = ''.join([c for c in text if c not in string.punctuation])
+    word_list = only_words.lower().split()
+
+    return word_list
+
+def tally_word_matches_between(text_words, languages):
+    matches = [0]*len(languages)
+
+    for idx, selected_language in enumerate(languages):
+        for test_word in selected_language['common_words']:
+            matches[idx] += text_words.count(test_word)
+
+    return matches
+
+def find_top_match_index(match_list):
+    highest_match_total = 0
+    answer_index = 0
+
+    for i, word_match_total in enumerate(match_list):
+        if word_match_total > highest_match_total:
+            highest_match_total = word_match_total
+            answer_index = i
+
+    return int(answer_index)
