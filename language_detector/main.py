@@ -4,19 +4,19 @@ import string
 
 def detect_language(text, languages):
     # implement your solution here
-    words = create_word_list_from(text)
-    matches = tally_word_matches_between(words, languages)
-    answer_index = find_top_match_index(matches)
+    words = _create_word_list_from(text)
+    matches = _tally_word_matches_between(words, languages)
+    answer_index = _find_top_match_index(matches)
 
     return languages[answer_index]['name']
 
-def create_word_list_from(text):
+def _create_word_list_from(text):
     only_words = ''.join([c for c in text if c not in string.punctuation])
     word_list = only_words.lower().split()
 
     return word_list
 
-def tally_word_matches_between(text_words, languages):
+def _tally_word_matches_between(text_words, languages):
     matches = [0]*len(languages)
 
     for idx, selected_language in enumerate(languages):
@@ -25,7 +25,7 @@ def tally_word_matches_between(text_words, languages):
 
     return matches
 
-def find_top_match_index(match_list):
+def _find_top_match_index(match_list):
     highest_match_total = 0
     answer_index = 0
 
