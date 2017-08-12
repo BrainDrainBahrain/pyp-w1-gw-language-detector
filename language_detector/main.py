@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 import string
-"""This is the entry point of the program."""
+"""
+This collection of functions takes a receives a string of text and a list
+and determines the most frequently used language in said text.
+"""
 
 def detect_language(text, languages):
-    # implement your solution here
     words = _create_word_list_from(text)
     matches = _tally_word_matches_between(words, languages)
     answer_index = _find_top_match_index(matches)
